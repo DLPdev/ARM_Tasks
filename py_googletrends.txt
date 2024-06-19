@@ -1,0 +1,19 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import datetime
+
+
+from pytrends.request import TrendReq
+pytrends = TrendReq(hl='en-US', tz=360)
+
+kw_list = ["Football","Rugby","Tennis"]
+
+pytrends.build_payload(kw_list, timeframe='today 3-m')
+
+historicaldf = pytrends.interest_over_time()
+
+historicaldf.dropna(how='all',axis=0, inplace=True)
+
+historicaldf.plot(y=kw_list,
+        kind="line", figsize=(10, 10), xlabel = 'month', ylabel = 'search share')
